@@ -1,21 +1,25 @@
-class KgToPounds:
-	def __init__(self, kg = 0):
-		self.__kg = kg
+class LoggerTerminal:
 
-	def get_kg(self):
-		return self.__kg
+	def writer(self, message):
+		print(f'Message for terminal: {message}')
 
-	def set_kg(self, new_kg):
-		self.__kg = new_kg
+class LoggerFile:
 
-	def to_pounds(self):
-		return self.__kg*2.205
-
-	kgg = property(get_kg, set_kg)
+	def writer(self, message):
+		with open('log.txt', 'w', encoding='utf-8') as f:
+			f.write(message)
 
 
-first = KgToPounds()
-first.kgg = 35
-print(first.to_pounds())
-getKg = first.kgg
-print(getKg)
+class Logger:
+	def __init__(self, message):
+		self.message = message
+
+	def log_to_file(self, method):
+		method.writer(self.message)
+
+	def log_to_terminal(self, method):
+		method.writer(self.message)
+
+
+lg = Logger('404')
+lg.log_to_terminal(LoggerTerminal())
